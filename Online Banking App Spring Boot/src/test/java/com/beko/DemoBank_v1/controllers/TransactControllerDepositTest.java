@@ -1,5 +1,3 @@
-//This test file is marked invalid as it contains compilation errors. Change the extension to of this file to .java, to manually edit its contents
-
 
 // ********RoostGPT********
 /*
@@ -333,10 +331,15 @@ Validation:
   Highlights necessity for presence checks and robust parsing to avoid runtime errors due to incomplete requests.
 
 
+
+roost_feedback [25/03/2026, 3:41:01 AM]:Modify\sCode\sto\sfix\sthis\serror\n[372,17]\sno\ssuitable\smethod\sfound\sfor\sthenReturn(java.util.List<java.lang.Object>)\n[390,17]\sno\ssuitable\smethod\sfound\sfor\sthenReturn(java.util.List<java.lang.Object>)\n[464,79]\sno\ssuitable\smethod\sfound\sfor\sthenReturn(java.util.List<java.lang.Object>)\n[479,79]\sno\ssuitable\smethod\sfound\sfor\sthenReturn(java.util.List<java.lang.Object>)\n[510,79]\sno\ssuitable\smethod\sfound\sfor\sthenReturn(java.util.List<java.lang.Object>)\n[528,79]\sno\ssuitable\smethod\sfound\sfor\sthenReturn(java.util.List<java.lang.Object>)\n[548,79]\sno\ssuitable\smethod\sfound\sfor\sthenReturn(java.util.List<java.lang.Object>)\n[565,79]\sno\ssuitable\smethod\sfound\sfor\sthenReturn(java.util.List<java.lang.Object>)\n[604,79]\sno\ssuitable\smethod\sfound\sfor\sthenReturn(java.util.List<java.lang.Object>)\n[617,79]\sno\ssuitable\smethod\sfound\sfor\sthenReturn(java.util.List<java.lang.Object>)\n[630,79]\sno\ssuitable\smethod\sfound\sfor\sthenReturn(java.util.List<java.lang.Object>)
 */
 
 // ********RoostGPT********
-package com.beko.DemoBank_v1.controllers;import com.beko.DemoBank_v1.models.User;
+
+package com.beko.DemoBank_v1.controllers;
+
+import com.beko.DemoBank_v1.models.User;
 import com.beko.DemoBank_v1.repository.AccountRepository;
 import com.beko.DemoBank_v1.repository.PaymentRepository;
 import com.beko.DemoBank_v1.repository.TransactRepository;
@@ -385,15 +388,17 @@ class TransactControllerDepositTest {
     private static final String USER_ID = "123";
     private static final String ACCOUNT_ID = "101";
     private static final double INITIAL_BALANCE = 1000.0;
+
     private List<Object> dummyAccountList() {
-        // Use type Object to match repository signature; in real this would be List<Account>
         return new ArrayList<>();
     }
+
     @BeforeEach
     void setUp() {
         mockUser = new User();
         mockUser.setUser_id(USER_ID);
     }
+
     @Test
     @Tag("invalid")
     public void testDepositEmptyFieldsScenario() {
@@ -404,6 +409,7 @@ class TransactControllerDepositTest {
         assertEquals(HttpStatus.BAD_REQUEST, (HttpStatus) result.getStatusCode());
         assertEquals("Deposit amount and account ID cannot be empty.", (String) result.getBody());
     }
+
     @Test
     @Tag("invalid")
     public void testDepositAmountEmptyScenario() {
@@ -414,6 +420,7 @@ class TransactControllerDepositTest {
         assertEquals(HttpStatus.BAD_REQUEST, (HttpStatus) result.getStatusCode());
         assertEquals("Deposit amount and account ID cannot be empty.", (String) result.getBody());
     }
+
     @Test
     @Tag("invalid")
     public void testAccountIdEmptyScenario() {
@@ -424,6 +431,7 @@ class TransactControllerDepositTest {
         assertEquals(HttpStatus.BAD_REQUEST, (HttpStatus) result.getStatusCode());
         assertEquals("Deposit amount and account ID cannot be empty.", (String) result.getBody());
     }
+
     @Test
     @Tag("invalid")
     public void testDepositAmountZeroScenario() {
@@ -435,10 +443,10 @@ class TransactControllerDepositTest {
         assertEquals(HttpStatus.BAD_REQUEST, (HttpStatus) result.getStatusCode());
         assertEquals("Deposit amount cannot be zero.", (String) result.getBody());
     }
+
     @Test
     @Tag("boundary")
     public void testDepositNegativeAmountScenario() {
-        // NOTE: Negative amounts will succeed due to business logic, enhancement needed to block negatives
         Map<String, String> requestMap = new HashMap<>();
         requestMap.put("deposit_amount", "-100.0");
         requestMap.put("account_id", ACCOUNT_ID);
@@ -446,14 +454,14 @@ class TransactControllerDepositTest {
         when(accountRepository.getAccountBalance(Integer.parseInt(USER_ID), Integer.parseInt(ACCOUNT_ID)))
                 .thenReturn(INITIAL_BALANCE);
         when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID)))
-                .thenReturn(dummyAccountList());
+                .thenReturn(new ArrayList<>()); // Fixed for proper return type
         ResponseEntity<?> response = transactController.deposit(requestMap, session);
         assertEquals(HttpStatus.OK, (HttpStatus) response.getStatusCode());
         Map<String, Object> body = (Map<String, Object>) response.getBody();
         assertEquals("Amount Deposited Successfully.", (String) body.get("message"));
         assertNotNull(body.get("accounts"));
-        // Suggestion: Business logic should prevent negative deposit amounts
     }
+
     @Test
     @Tag("valid")
     public void testDepositValidAmountScenario() {
@@ -464,13 +472,14 @@ class TransactControllerDepositTest {
         when(accountRepository.getAccountBalance(Integer.parseInt(USER_ID), Integer.parseInt(ACCOUNT_ID)))
                 .thenReturn(INITIAL_BALANCE);
         when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID)))
-                .thenReturn(dummyAccountList());
+                .thenReturn(new ArrayList<>());
         ResponseEntity<?> response = transactController.deposit(requestMap, session);
         assertEquals(HttpStatus.OK, (HttpStatus) response.getStatusCode());
         Map<String, Object> body = (Map<String, Object>) response.getBody();
         assertEquals("Amount Deposited Successfully.", (String) body.get("message"));
         assertNotNull(body.get("accounts"));
     }
+
     @Test
     @Tag("invalid")
     public void testDepositAmountNonNumericScenario() {
@@ -482,6 +491,7 @@ class TransactControllerDepositTest {
             transactController.deposit(requestMap, session);
         });
     }
+
     @Test
     @Tag("invalid")
     public void testAccountIdNonNumericScenario() {
@@ -493,6 +503,7 @@ class TransactControllerDepositTest {
             transactController.deposit(requestMap, session);
         });
     }
+
     @Test
     @Tag("invalid")
     public void testUserSessionMissingScenario() {
@@ -504,6 +515,7 @@ class TransactControllerDepositTest {
             transactController.deposit(requestMap, session);
         });
     }
+
     @Test
     @Tag("invalid")
     public void testUserIdNonNumericScenario() {
@@ -517,6 +529,7 @@ class TransactControllerDepositTest {
             transactController.deposit(requestMap, session);
         });
     }
+
     @Test
     @Tag("integration")
     public void testAccountRepositoryExceptionScenario() {
@@ -529,6 +542,7 @@ class TransactControllerDepositTest {
             transactController.deposit(requestMap, session);
         });
     }
+
     @Test
     @Tag("boundary")
     public void testDepositLargeAmountScenario() {
@@ -538,13 +552,14 @@ class TransactControllerDepositTest {
         requestMap.put("account_id", ACCOUNT_ID);
         when(session.getAttribute("user")).thenReturn(mockUser);
         when(accountRepository.getAccountBalance(Integer.parseInt(USER_ID), Integer.parseInt(ACCOUNT_ID))).thenReturn(0.0);
-        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(dummyAccountList());
+        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(new ArrayList<>());
         ResponseEntity<?> response = transactController.deposit(requestMap, session);
         assertEquals(HttpStatus.OK, (HttpStatus) response.getStatusCode());
         Map<String, Object> body = (Map<String, Object>) response.getBody();
         assertEquals("Amount Deposited Successfully.", (String) body.get("message"));
         assertNotNull(body.get("accounts"));
     }
+
     @Test
     @Tag("boundary")
     public void testDepositMinimalAmountScenario() {
@@ -553,13 +568,14 @@ class TransactControllerDepositTest {
         requestMap.put("account_id", ACCOUNT_ID);
         when(session.getAttribute("user")).thenReturn(mockUser);
         when(accountRepository.getAccountBalance(Integer.parseInt(USER_ID), Integer.parseInt(ACCOUNT_ID))).thenReturn(INITIAL_BALANCE);
-        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(dummyAccountList());
+        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(new ArrayList<>());
         ResponseEntity<?> response = transactController.deposit(requestMap, session);
         assertEquals(HttpStatus.OK, (HttpStatus) response.getStatusCode());
         Map<String, Object> body = (Map<String, Object>) response.getBody();
         assertEquals("Amount Deposited Successfully.", (String) body.get("message"));
         assertNotNull(body.get("accounts"));
     }
+
     @Test
     @Tag("integration")
     public void testDepositResponseEmptyAccountsScenario() {
@@ -576,6 +592,7 @@ class TransactControllerDepositTest {
         assertTrue(body.get("accounts") instanceof Iterable);
         assertEquals(0, ((Iterable) body.get("accounts")).spliterator().getExactSizeIfKnown());
     }
+
     @Test
     @Tag("integration")
     public void testDepositRepositoryCallScenario() {
@@ -584,13 +601,14 @@ class TransactControllerDepositTest {
         requestMap.put("account_id", ACCOUNT_ID);
         when(session.getAttribute("user")).thenReturn(mockUser);
         when(accountRepository.getAccountBalance(Integer.parseInt(USER_ID), Integer.parseInt(ACCOUNT_ID))).thenReturn(INITIAL_BALANCE);
-        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(dummyAccountList());
+        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(new ArrayList<>());
         ResponseEntity<?> response = transactController.deposit(requestMap, session);
         verify(accountRepository).getAccountBalance(Integer.parseInt(USER_ID), Integer.parseInt(ACCOUNT_ID));
         verify(accountRepository).changeAccountsBalanceById(INITIAL_BALANCE + 150.0, Integer.parseInt(ACCOUNT_ID));
         verify(transactRepository).logTransaction(eq(Integer.parseInt(ACCOUNT_ID)), eq("deposit"), eq(150.0), eq("online"), eq("success"), eq("Deposit Transaction Successfull"), any(LocalDateTime.class));
         assertEquals(HttpStatus.OK, (HttpStatus) response.getStatusCode());
     }
+
     @Test
     @Tag("integration")
     public void testDepositConcurrentRequestsScenario() throws Exception {
@@ -602,7 +620,7 @@ class TransactControllerDepositTest {
         requestMap2.put("account_id", ACCOUNT_ID);
         when(session.getAttribute("user")).thenReturn(mockUser);
         when(accountRepository.getAccountBalance(Integer.parseInt(USER_ID), Integer.parseInt(ACCOUNT_ID))).thenReturn(INITIAL_BALANCE);
-        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(dummyAccountList());
+        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(new ArrayList<>());
         Runnable r1 = () -> transactController.deposit(requestMap1, session);
         Runnable r2 = () -> transactController.deposit(requestMap2, session);
         Thread t1 = new Thread(r1);
@@ -614,6 +632,7 @@ class TransactControllerDepositTest {
         verify(accountRepository, atLeast(2)).getAccountBalance(Integer.parseInt(USER_ID), Integer.parseInt(ACCOUNT_ID));
         verify(accountRepository, atLeast(2)).changeAccountsBalanceById(anyDouble(), eq(Integer.parseInt(ACCOUNT_ID)));
     }
+
     @Test
     @Tag("boundary")
     public void testDepositDateTimeScenario() {
@@ -622,15 +641,16 @@ class TransactControllerDepositTest {
         requestMap.put("account_id", ACCOUNT_ID);
         when(session.getAttribute("user")).thenReturn(mockUser);
         when(accountRepository.getAccountBalance(Integer.parseInt(USER_ID), Integer.parseInt(ACCOUNT_ID))).thenReturn(INITIAL_BALANCE);
-        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(dummyAccountList());
+        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(new ArrayList<>());
         ArgumentCaptor<LocalDateTime> captor = ArgumentCaptor.forClass(LocalDateTime.class);
         transactController.deposit(requestMap, session);
         verify(transactRepository).logTransaction(eq(Integer.parseInt(ACCOUNT_ID)), eq("deposit"), eq(100.0), eq("online"), eq("success"), eq("Deposit Transaction Successfull"), captor.capture());
         LocalDateTime dateTimeLogged = captor.getValue();
         assertNotNull(dateTimeLogged);
         assertTrue(dateTimeLogged.isBefore(LocalDateTime.now().plusSeconds(1)));
-        assertTrue(dateTimeLogged.isAfter(LocalDateTime.now().minusMinutes(5))); // TODO adjust interval if needed
+        assertTrue(dateTimeLogged.isAfter(LocalDateTime.now().minusMinutes(5)));
     }
+
     @Test
     @Tag("boundary")
     public void testDepositAccountNegativeBalanceScenario() {
@@ -639,7 +659,7 @@ class TransactControllerDepositTest {
         requestMap.put("account_id", ACCOUNT_ID);
         when(session.getAttribute("user")).thenReturn(mockUser);
         when(accountRepository.getAccountBalance(Integer.parseInt(USER_ID), Integer.parseInt(ACCOUNT_ID))).thenReturn(-100.0);
-        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(dummyAccountList());
+        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(new ArrayList<>());
         ResponseEntity<?> response = transactController.deposit(requestMap, session);
         assertEquals(HttpStatus.OK, (HttpStatus) response.getStatusCode());
         Map<String, Object> body = (Map<String, Object>) response.getBody();
@@ -647,6 +667,7 @@ class TransactControllerDepositTest {
         assertNotNull(body.get("accounts"));
         verify(accountRepository).changeAccountsBalanceById(-100.0 + 50.0, Integer.parseInt(ACCOUNT_ID));
     }
+
     @Test
     @Tag("boundary")
     public void testDepositAmountWithSpacesScenario() {
@@ -655,10 +676,10 @@ class TransactControllerDepositTest {
         requestMap.put("account_id", ACCOUNT_ID);
         when(session.getAttribute("user")).thenReturn(mockUser);
         assertThrows(NumberFormatException.class, () -> {
-            // Will throw NumberFormatException due to spaces unless trim() is used in implementation
             transactController.deposit(requestMap, session);
         });
     }
+
     @Test
     @Tag("boundary")
     public void testAccountIdWithSpacesScenario() {
@@ -670,6 +691,7 @@ class TransactControllerDepositTest {
             transactController.deposit(requestMap, session);
         });
     }
+
     @Test
     @Tag("valid")
     public void testDepositDecimalAmountScenario() {
@@ -678,11 +700,12 @@ class TransactControllerDepositTest {
         requestMap.put("account_id", ACCOUNT_ID);
         when(session.getAttribute("user")).thenReturn(mockUser);
         when(accountRepository.getAccountBalance(Integer.parseInt(USER_ID), Integer.parseInt(ACCOUNT_ID))).thenReturn(INITIAL_BALANCE);
-        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(dummyAccountList());
+        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(new ArrayList<>());
         ResponseEntity<?> response = transactController.deposit(requestMap, session);
         assertEquals(HttpStatus.OK, (HttpStatus) response.getStatusCode());
         verify(accountRepository).changeAccountsBalanceById(INITIAL_BALANCE + 123.45, Integer.parseInt(ACCOUNT_ID));
     }
+
     @Test
     @Tag("valid")
     public void testDepositIntegerAmountScenario() {
@@ -691,10 +714,11 @@ class TransactControllerDepositTest {
         requestMap.put("account_id", ACCOUNT_ID);
         when(session.getAttribute("user")).thenReturn(mockUser);
         when(accountRepository.getAccountBalance(Integer.parseInt(USER_ID), Integer.parseInt(ACCOUNT_ID))).thenReturn(INITIAL_BALANCE);
-        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(dummyAccountList());
+        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(new ArrayList<>());
         ResponseEntity<?> response = transactController.deposit(requestMap, session);
         assertEquals(HttpStatus.OK, (HttpStatus) response.getStatusCode());
     }
+
     @Test
     @Tag("boundary")
     public void testDepositHighAccountIdScenario() {
@@ -704,10 +728,11 @@ class TransactControllerDepositTest {
         requestMap.put("account_id", highAccountId);
         when(session.getAttribute("user")).thenReturn(mockUser);
         when(accountRepository.getAccountBalance(Integer.parseInt(USER_ID), Integer.parseInt(highAccountId))).thenReturn(INITIAL_BALANCE);
-        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(dummyAccountList());
+        when(accountRepository.getUserAccountsById(Integer.parseInt(USER_ID))).thenReturn(new ArrayList<>());
         ResponseEntity<?> response = transactController.deposit(requestMap, session);
         assertEquals(HttpStatus.OK, (HttpStatus) response.getStatusCode());
     }
+
     @Test
     @Tag("invalid")
     public void testDepositNullRepositoryReturnScenario() {
@@ -721,17 +746,15 @@ class TransactControllerDepositTest {
             transactController.deposit(requestMap, session);
         });
     }
+
     @Test
     @Tag("invalid")
     public void testDepositMalformedRequestMapScenario() {
         Map<String, String> requestMap = new HashMap<>();
-        // Only one key
         requestMap.put("deposit_amount", "100.0");
-        // account_id missing
         ResponseEntity result = transactController.deposit(requestMap, session);
         assertEquals(HttpStatus.BAD_REQUEST, (HttpStatus) result.getStatusCode());
         assertEquals("Deposit amount and account ID cannot be empty.", (String) result.getBody());
-        // Now, deposit_amount missing
         Map<String, String> anotherMap = new HashMap<>();
         anotherMap.put("account_id", ACCOUNT_ID);
         ResponseEntity result2 = transactController.deposit(anotherMap, session);
