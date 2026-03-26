@@ -102,14 +102,20 @@ Execution:
 Validation:
   This scenario validates there is no unintended static state or shared data, safeguarding object encapsulation and instance isolation.
 
+
+roost_feedback [26/03/2026, 11:21:55 AM]:- Add more comments to the test\n- Improve assertions\n
 */
 
 // ********RoostGPT********
+
 package com.beko.DemoBank_v1.models;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
@@ -119,83 +125,103 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("valid")
 	public void paymentIdReturnsDefaultValueWhenNotSet() {
+		// Verify that a new Payment object returns the default payment_id value.
 		Payment payment = new Payment();
 		int expectedPaymentId = 0;
-		assertEquals((int) expectedPaymentId, (int) payment.getPayment_id());
+		assertEquals(expectedPaymentId, payment.getPayment_id(), "Default payment_id should be 0");
 	}
 
 	@Test
 	@Tag("valid")
 	public void paymentIdReturnsManuallyAssignedValue() {
+		// Confirm that a manually assigned payment_id is returned correctly.
 		Payment payment = new Payment();
-		int assignedPaymentId = 12345; // TODO: Change the test value if needed
-		payment.setPayment_id((int) assignedPaymentId);
-		assertEquals((int) assignedPaymentId, (int) payment.getPayment_id());
+		int assignedPaymentId = 12345;
+		payment.setPayment_id(assignedPaymentId);
+		assertEquals(assignedPaymentId, payment.getPayment_id(), "Payment_id should match the assigned value");
 	}
 
 	@Test
 	@Tag("valid")
 	public void paymentIdReflectsMostRecentAssignment() {
+		// Ensure that setting payment_id multiple times reflects only the most recent assignment.
 		Payment payment = new Payment();
-		int initialPaymentId = 5678; // TODO: Change the test value if needed
-		int updatedPaymentId = 9012; // TODO: Change the test value if needed
-		payment.setPayment_id((int) initialPaymentId);
-		payment.setPayment_id((int) updatedPaymentId);
-		assertEquals((int) updatedPaymentId, (int) payment.getPayment_id());
+		int initialPaymentId = 5678;
+		int updatedPaymentId = 9012;
+		payment.setPayment_id(initialPaymentId);
+		payment.setPayment_id(updatedPaymentId);
+		assertAll(
+			() -> assertNotEquals(initialPaymentId, payment.getPayment_id(), "Payment_id should not match initial assignment after update"),
+			() -> assertEquals(updatedPaymentId, payment.getPayment_id(), "Payment_id should match the most recent assignment")
+		);
 	}
 
 	@Test
 	@Tag("invalid")
 	public void paymentIdCanBeNegative() {
+		// Test that negative values are accepted for payment_id.
 		Payment payment = new Payment();
-		int negativePaymentId = -5000; // TODO: Change the test value if needed
-		payment.setPayment_id((int) negativePaymentId);
-		assertEquals((int) negativePaymentId, (int) payment.getPayment_id());
+		int negativePaymentId = -5000;
+		payment.setPayment_id(negativePaymentId);
+		assertEquals(negativePaymentId, payment.getPayment_id(), "Payment_id should accept negative values");
+		assertTrue(payment.getPayment_id() < 0, "Payment_id should be negative");
 	}
 
 	@Test
 	@Tag("boundary")
 	public void paymentIdCanBeMaxInteger() {
+		// Validate that the maximum integer value can be assigned as payment_id.
 		Payment payment = new Payment();
 		int maxIntegerValue = Integer.MAX_VALUE;
-		payment.setPayment_id((int) maxIntegerValue);
-		assertEquals((int) maxIntegerValue, (int) payment.getPayment_id());
+		payment.setPayment_id(maxIntegerValue);
+		assertEquals(maxIntegerValue, payment.getPayment_id(), "Payment_id should accept Integer.MAX_VALUE");
+		assertTrue(payment.getPayment_id() == Integer.MAX_VALUE, "Payment_id should equal max integer value");
 	}
 
 	@Test
 	@Tag("boundary")
 	public void paymentIdCanBeMinInteger() {
+		// Validate that the minimum integer value can be assigned as payment_id.
 		Payment payment = new Payment();
 		int minIntegerValue = Integer.MIN_VALUE;
-		payment.setPayment_id((int) minIntegerValue);
-		assertEquals((int) minIntegerValue, (int) payment.getPayment_id());
+		payment.setPayment_id(minIntegerValue);
+		assertEquals(minIntegerValue, payment.getPayment_id(), "Payment_id should accept Integer.MIN_VALUE");
+		assertTrue(payment.getPayment_id() == Integer.MIN_VALUE, "Payment_id should equal min integer value");
 	}
 
 	@Test
 	@Tag("valid")
 	public void getPaymentIdReturnsConsistentValueOnMultipleCalls() {
+		// Assert that getPayment_id returns the same value on repeated calls.
 		Payment payment = new Payment();
-		int assignedPaymentId = 777; // TODO: Change the test value if needed
-		payment.setPayment_id((int) assignedPaymentId);
+		int assignedPaymentId = 777;
+		payment.setPayment_id(assignedPaymentId);
 		int firstCall = payment.getPayment_id();
 		int secondCall = payment.getPayment_id();
 		int thirdCall = payment.getPayment_id();
-		assertEquals((int) assignedPaymentId, (int) firstCall);
-		assertEquals((int) assignedPaymentId, (int) secondCall);
-		assertEquals((int) assignedPaymentId, (int) thirdCall);
+		assertAll(
+			() -> assertEquals(assignedPaymentId, firstCall, "First call should match assigned payment_id"),
+			() -> assertEquals(assignedPaymentId, secondCall, "Second call should match assigned payment_id"),
+			() -> assertEquals(assignedPaymentId, thirdCall, "Third call should match assigned payment_id"),
+			() -> assertTrue(firstCall == secondCall && secondCall == thirdCall, "All calls should return consistent payment_id")
+		);
 	}
 
 	@Test
 	@Tag("integration")
 	public void paymentIdsAreInstanceSpecific() {
+		// Check that different Payment instances have independent payment_id values.
 		Payment payment1 = new Payment();
 		Payment payment2 = new Payment();
-		int paymentId1 = 1001; // TODO: Change the test value if needed
-		int paymentId2 = 2002; // TODO: Change the test value if needed
-		payment1.setPayment_id((int) paymentId1);
-		payment2.setPayment_id((int) paymentId2);
-		assertEquals((int) paymentId1, (int) payment1.getPayment_id());
-		assertEquals((int) paymentId2, (int) payment2.getPayment_id());
+		int paymentId1 = 1001;
+		int paymentId2 = 2002;
+		payment1.setPayment_id(paymentId1);
+		payment2.setPayment_id(paymentId2);
+		assertAll(
+			() -> assertEquals(paymentId1, payment1.getPayment_id(), "Payment1 payment_id should match assigned value"),
+			() -> assertEquals(paymentId2, payment2.getPayment_id(), "Payment2 payment_id should match assigned value"),
+			() -> assertNotEquals(payment1.getPayment_id(), payment2.getPayment_id(), "Payment1 and Payment2 payment_id should be different")
+		);
 	}
 
 }
