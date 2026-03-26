@@ -106,15 +106,16 @@ Validation:
 roost_feedback [26/03/2026, 11:21:55 AM]:- Add more comments to the test\n- Improve assertions\n
 
 roost_feedback [26/03/2026, 4:33:59 PM]:dd more comments from beginning:x
-*/
 
-// ********RoostGPT********
-
-/********RoostGPT********
  * Test class for verifying Payment entity's payment_id behavior.
  * Covers default, manually assigned, boundary, negative values, repeated or independent calls and instance-specific functionality.
  * Ensures payment_id field in Payment works correctly for a variety of edge and typical cases.
  ********RoostGPT********/
+roost_feedback [26/03/2026, 4:39:27 PM]:remove extra test file comments\n\n\n
+*/
+
+// ********RoostGPT********
+
 package com.beko.DemoBank_v1.models;
 
 import org.junit.jupiter.api.Tag;
