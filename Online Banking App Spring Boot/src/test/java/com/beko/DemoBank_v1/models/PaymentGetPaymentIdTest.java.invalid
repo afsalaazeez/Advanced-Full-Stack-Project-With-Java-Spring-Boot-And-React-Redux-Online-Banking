@@ -112,40 +112,6 @@ roost_feedback [26/03/2026, 4:33:59 PM]:dd more comments from beginning:x
  * Ensures payment_id field in Payment works correctly for a variety of edge and typical cases.
  ********RoostGPT********/
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
-class ExampleTest {
-    
-    @Test
-    void testAddition() {
-        int result = 2 + 3;
-        assertEquals(5, result);
-    }
-
-    @Test
-    void testSubtraction() {
-        int result = 5 - 2;
-        assertEquals(3, result);
-    }
-
-    @Test
-    void testMultiplication() {
-        int result = 3 * 4;
-        assertEquals(12, result);
-    }
-
-    @Test
-    void testDivision() {
-        int result = 12 / 3;
-        assertEquals(4, result);
-    }
-}
-roost_feedback [26/03/2026, 4:49:19 PM]:add more comments to footer
-*/
-
-// ********RoostGPT********
-
 package com.beko.DemoBank_v1.models;
 
 import org.junit.jupiter.api.Tag;
@@ -267,4 +233,38 @@ public class PaymentGetPaymentIdTest {
 	// - Review tags to expand valid/integration/boundary scenarios as needed.
 	// **********************************************************************
 
+}
+roost_feedback [26/03/2026, 6:05:43 PM]:remove extra comments from the test file
+*/
+
+// ********RoostGPT********
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class ExampleTest {
+
+    @Test
+    void testAddition() {
+        int result = 2 + 3;
+        assertEquals(5, result);
+    }
+
+    @Test
+    void testSubtraction() {
+        int result = 5 - 2;
+        assertEquals(3, result);
+    }
+
+    @Test
+    void testMultiplication() {
+        int result = 3 * 4;
+        assertEquals(12, result);
+    }
+
+    @Test
+    void testDivision() {
+        int result = 12 / 3;
+        assertEquals(4, result);
+    }
 }
