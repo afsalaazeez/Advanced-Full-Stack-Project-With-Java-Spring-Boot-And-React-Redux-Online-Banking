@@ -112,40 +112,6 @@ roost_feedback [26/03/2026, 4:33:59 PM]:dd more comments from beginning:x
  * Ensures payment_id field in Payment works correctly for a variety of edge and typical cases.
  ********RoostGPT********/
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
-class ExampleTest {
-
-    @Test
-    void testAddition() {
-        int result = 2 + 3;
-        assertEquals(5, result);
-    }
-
-    @Test
-    void testSubtraction() {
-        int result = 5 - 2;
-        assertEquals(3, result);
-    }
-
-    @Test
-    void testMultiplication() {
-        int result = 3 * 4;
-        assertEquals(12, result);
-    }
-
-    @Test
-    void testDivision() {
-        int result = 12 / 3;
-        assertEquals(4, result);
-    }
-}
-roost_feedback [26/03/2026, 6:08:23 PM]:add more comments to test
-*/
-
-// ********RoostGPT********
-
 package com.beko.DemoBank_v1.models;
 
 import org.junit.jupiter.api.Tag;
@@ -261,4 +227,56 @@ public class PaymentGetPaymentIdTest {
 			() -> assertNotEquals(payment1.getPayment_id(), payment2.getPayment_id(), "Payment1 and Payment2 payment_id should be different")
 		);
 	}
+}
+roost_feedback [26/03/2026, 6:34:15 PM]:add more comments
+add them line by line
+make sure they are separated
+*/
+
+// ********RoostGPT********
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class ExampleTest {
+
+// This test method checks addition.
+// It adds two numbers: 2 and 3.
+    @Test
+    void testAddition() {
+        // Perform addition: 2 + 3.
+        int result = 2 + 3;
+        // Assert that result equals 5.
+        assertEquals(5, result);
+    }
+
+// This test method checks subtraction.
+// It subtracts 2 from 5.
+    @Test
+    void testSubtraction() {
+        // Perform subtraction: 5 - 2.
+        int result = 5 - 2;
+        // Assert that result equals 3.
+        assertEquals(3, result);
+    }
+
+// This test method checks multiplication.
+// It multiplies two numbers: 3 and 4.
+    @Test
+    void testMultiplication() {
+        // Perform multiplication: 3 * 4.
+        int result = 3 * 4;
+        // Assert that result equals 12.
+        assertEquals(12, result);
+    }
+
+// This test method checks division.
+// It divides 12 by 3.
+    @Test
+    void testDivision() {
+        // Perform division: 12 / 3.
+        int result = 12 / 3;
+        // Assert that result equals 4.
+        assertEquals(4, result);
+    }
 }
