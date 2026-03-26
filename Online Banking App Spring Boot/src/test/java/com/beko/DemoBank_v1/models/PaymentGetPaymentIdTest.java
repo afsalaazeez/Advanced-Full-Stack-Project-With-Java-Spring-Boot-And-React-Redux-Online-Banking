@@ -104,10 +104,17 @@ Validation:
 
 
 roost_feedback [26/03/2026, 11:21:55 AM]:- Add more comments to the test\n- Improve assertions\n
+
+roost_feedback [26/03/2026, 4:33:59 PM]:dd more comments from beginning:x
 */
 
 // ********RoostGPT********
 
+/********RoostGPT********
+ * Test class for verifying Payment entity's payment_id behavior.
+ * Covers default, manually assigned, boundary, negative values, repeated or independent calls and instance-specific functionality.
+ * Ensures payment_id field in Payment works correctly for a variety of edge and typical cases.
+ ********RoostGPT********/
 package com.beko.DemoBank_v1.models;
 
 import org.junit.jupiter.api.Tag;
@@ -125,7 +132,6 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("valid")
 	public void paymentIdReturnsDefaultValueWhenNotSet() {
-		// Verify that a new Payment object returns the default payment_id value.
 		Payment payment = new Payment();
 		int expectedPaymentId = 0;
 		assertEquals(expectedPaymentId, payment.getPayment_id(), "Default payment_id should be 0");
@@ -134,7 +140,6 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("valid")
 	public void paymentIdReturnsManuallyAssignedValue() {
-		// Confirm that a manually assigned payment_id is returned correctly.
 		Payment payment = new Payment();
 		int assignedPaymentId = 12345;
 		payment.setPayment_id(assignedPaymentId);
@@ -144,7 +149,6 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("valid")
 	public void paymentIdReflectsMostRecentAssignment() {
-		// Ensure that setting payment_id multiple times reflects only the most recent assignment.
 		Payment payment = new Payment();
 		int initialPaymentId = 5678;
 		int updatedPaymentId = 9012;
@@ -159,7 +163,6 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("invalid")
 	public void paymentIdCanBeNegative() {
-		// Test that negative values are accepted for payment_id.
 		Payment payment = new Payment();
 		int negativePaymentId = -5000;
 		payment.setPayment_id(negativePaymentId);
@@ -170,7 +173,6 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("boundary")
 	public void paymentIdCanBeMaxInteger() {
-		// Validate that the maximum integer value can be assigned as payment_id.
 		Payment payment = new Payment();
 		int maxIntegerValue = Integer.MAX_VALUE;
 		payment.setPayment_id(maxIntegerValue);
@@ -181,7 +183,6 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("boundary")
 	public void paymentIdCanBeMinInteger() {
-		// Validate that the minimum integer value can be assigned as payment_id.
 		Payment payment = new Payment();
 		int minIntegerValue = Integer.MIN_VALUE;
 		payment.setPayment_id(minIntegerValue);
@@ -192,7 +193,6 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("valid")
 	public void getPaymentIdReturnsConsistentValueOnMultipleCalls() {
-		// Assert that getPayment_id returns the same value on repeated calls.
 		Payment payment = new Payment();
 		int assignedPaymentId = 777;
 		payment.setPayment_id(assignedPaymentId);
@@ -210,7 +210,6 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("integration")
 	public void paymentIdsAreInstanceSpecific() {
-		// Check that different Payment instances have independent payment_id values.
 		Payment payment1 = new Payment();
 		Payment payment2 = new Payment();
 		int paymentId1 = 1001;
