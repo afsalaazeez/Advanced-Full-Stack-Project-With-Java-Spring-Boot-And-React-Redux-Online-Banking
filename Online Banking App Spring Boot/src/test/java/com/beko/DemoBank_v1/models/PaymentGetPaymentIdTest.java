@@ -123,6 +123,8 @@ Execution:
 Validation:
   Validates compatibility with JPA entity lifecycle expectations, confirming no unexpected initialization occurs for identity fields.
 
+
+roost_feedback [26/03/2026, 6:41:26 AM]:-\sAdd\smore\scomments\sto\sthe\stest
 */
 
 // ********RoostGPT********
@@ -142,6 +144,7 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("valid")
 	public void testGetPaymentIdReturnsSetValue() {
+		// Test that getPayment_id returns the value that was explicitly set
 		Payment payment = new Payment();
 		payment.setPayment_id(12345); // TODO: Use required test value
 		int actual = payment.getPayment_id();
@@ -151,6 +154,7 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("valid")
 	public void testGetPaymentIdReturnsDefaultValueWhenUnset() {
+		// Test that getPayment_id returns the default value (0) when not set
 		Payment payment = new Payment();
 		int actual = payment.getPayment_id();
 		assertEquals((int) 0, (int) actual);
@@ -159,6 +163,7 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("invalid")
 	public void testGetPaymentIdReturnsNegativeValue() {
+		// Test that getPayment_id returns a negative value when set to negative
 		Payment payment = new Payment();
 		payment.setPayment_id(-999); // TODO: Use required negative test value
 		int actual = payment.getPayment_id();
@@ -168,6 +173,7 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("boundary")
 	public void testGetPaymentIdReturnsZeroWhenSetExplicitly() {
+		// Test that getPayment_id returns 0 when set explicitly
 		Payment payment = new Payment();
 		payment.setPayment_id(0); // TODO: Use required test value
 		int actual = payment.getPayment_id();
@@ -177,6 +183,7 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("boundary")
 	public void testGetPaymentIdReturnsMaxIntValue() {
+		// Test that getPayment_id returns Integer.MAX_VALUE correctly
 		Payment payment = new Payment();
 		payment.setPayment_id(Integer.MAX_VALUE); // TODO: Use required boundary value
 		int actual = payment.getPayment_id();
@@ -186,6 +193,7 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("boundary")
 	public void testGetPaymentIdReturnsMinIntValue() {
+		// Test that getPayment_id returns Integer.MIN_VALUE correctly
 		Payment payment = new Payment();
 		payment.setPayment_id(Integer.MIN_VALUE); // TODO: Use required boundary value
 		int actual = payment.getPayment_id();
@@ -195,6 +203,7 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("valid")
 	public void testGetPaymentIdReturnsMostRecentlySetValue() {
+		// Test that getPayment_id always returns the most recently set value
 		Payment payment = new Payment();
 		payment.setPayment_id(10);
 		payment.setPayment_id(20);
@@ -206,6 +215,7 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("integration")
 	public void testGetPaymentIdNotAffectedByOtherFields() {
+		// Test that getPayment_id returns correct value regardless of other fields
 		Payment payment = new Payment();
 		payment.setPayment_id(8888); // TODO: Use required test value
 		payment.setAccount_id(777); // TODO: Set dummy value
@@ -223,6 +233,7 @@ public class PaymentGetPaymentIdTest {
 	@Test
 	@Tag("integration")
 	public void testGetPaymentIdDefaultsWithJpaNewInstance() {
+		// Test the default payment_id when a new Payment object is created via JPA
 		Payment payment = new Payment();
 		int actual = payment.getPayment_id();
 		assertEquals((int) 0, (int) actual);
