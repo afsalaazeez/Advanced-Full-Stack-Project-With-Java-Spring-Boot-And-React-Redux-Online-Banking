@@ -125,6 +125,8 @@ Validation:
 
 
 roost_feedback [26/03/2026, 6:41:26 AM]:-\sAdd\smore\scomments\sto\sthe\stest
+
+roost_feedback [27/03/2026, 5:29:11 AM]:-\sFormat\sthe\stest\n-\sComment\sor\sremove\sthis\stest\smethod
 */
 
 // ********RoostGPT********
@@ -136,107 +138,104 @@ import org.junit.jupiter.api.Tag;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.*;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 public class PaymentGetPaymentIdTest {
 
-	@Test
-	@Tag("valid")
-	public void testGetPaymentIdReturnsSetValue() {
-		// Test that getPayment_id returns the value that was explicitly set
-		Payment payment = new Payment();
-		payment.setPayment_id(12345); // TODO: Use required test value
-		int actual = payment.getPayment_id();
-		assertEquals((int) 12345, (int) actual);
-	}
+    @Test
+    @Tag("valid")
+    public void testGetPaymentIdReturnsSetValue() {
+        Payment payment = new Payment();
+        payment.setPayment_id(12345);
+        int actual = payment.getPayment_id();
+        assertEquals(12345, actual);
+    }
 
-	@Test
-	@Tag("valid")
-	public void testGetPaymentIdReturnsDefaultValueWhenUnset() {
-		// Test that getPayment_id returns the default value (0) when not set
-		Payment payment = new Payment();
-		int actual = payment.getPayment_id();
-		assertEquals((int) 0, (int) actual);
-	}
+    @Test
+    @Tag("valid")
+    public void testGetPaymentIdReturnsDefaultValueWhenUnset() {
+        Payment payment = new Payment();
+        int actual = payment.getPayment_id();
+        assertEquals(0, actual);
+    }
 
-	@Test
-	@Tag("invalid")
-	public void testGetPaymentIdReturnsNegativeValue() {
-		// Test that getPayment_id returns a negative value when set to negative
-		Payment payment = new Payment();
-		payment.setPayment_id(-999); // TODO: Use required negative test value
-		int actual = payment.getPayment_id();
-		assertEquals((int) -999, (int) actual);
-	}
+    @Test
+    @Tag("invalid")
+    public void testGetPaymentIdReturnsNegativeValue() {
+        Payment payment = new Payment();
+        payment.setPayment_id(-999);
+        int actual = payment.getPayment_id();
+        assertEquals(-999, actual);
+    }
 
-	@Test
-	@Tag("boundary")
-	public void testGetPaymentIdReturnsZeroWhenSetExplicitly() {
-		// Test that getPayment_id returns 0 when set explicitly
-		Payment payment = new Payment();
-		payment.setPayment_id(0); // TODO: Use required test value
-		int actual = payment.getPayment_id();
-		assertEquals((int) 0, (int) actual);
-	}
+    @Test
+    @Tag("boundary")
+    public void testGetPaymentIdReturnsZeroWhenSetExplicitly() {
+        Payment payment = new Payment();
+        payment.setPayment_id(0);
+        int actual = payment.getPayment_id();
+        assertEquals(0, actual);
+    }
 
-	@Test
-	@Tag("boundary")
-	public void testGetPaymentIdReturnsMaxIntValue() {
-		// Test that getPayment_id returns Integer.MAX_VALUE correctly
-		Payment payment = new Payment();
-		payment.setPayment_id(Integer.MAX_VALUE); // TODO: Use required boundary value
-		int actual = payment.getPayment_id();
-		assertEquals((int) Integer.MAX_VALUE, (int) actual);
-	}
+    @Test
+    @Tag("boundary")
+    public void testGetPaymentIdReturnsMaxIntValue() {
+        Payment payment = new Payment();
+        payment.setPayment_id(Integer.MAX_VALUE);
+        int actual = payment.getPayment_id();
+        assertEquals(Integer.MAX_VALUE, actual);
+    }
 
-	@Test
-	@Tag("boundary")
-	public void testGetPaymentIdReturnsMinIntValue() {
-		// Test that getPayment_id returns Integer.MIN_VALUE correctly
-		Payment payment = new Payment();
-		payment.setPayment_id(Integer.MIN_VALUE); // TODO: Use required boundary value
-		int actual = payment.getPayment_id();
-		assertEquals((int) Integer.MIN_VALUE, (int) actual);
-	}
+    @Test
+    @Tag("boundary")
+    public void testGetPaymentIdReturnsMinIntValue() {
+        Payment payment = new Payment();
+        payment.setPayment_id(Integer.MIN_VALUE);
+        int actual = payment.getPayment_id();
+        assertEquals(Integer.MIN_VALUE, actual);
+    }
 
-	@Test
-	@Tag("valid")
-	public void testGetPaymentIdReturnsMostRecentlySetValue() {
-		// Test that getPayment_id always returns the most recently set value
-		Payment payment = new Payment();
-		payment.setPayment_id(10);
-		payment.setPayment_id(20);
-		payment.setPayment_id(30); // Most recent value
-		int actual = payment.getPayment_id();
-		assertEquals((int) 30, (int) actual);
-	}
+    @Test
+    @Tag("valid")
+    public void testGetPaymentIdReturnsMostRecentlySetValue() {
+        Payment payment = new Payment();
+        payment.setPayment_id(10);
+        payment.setPayment_id(20);
+        payment.setPayment_id(30);
+        int actual = payment.getPayment_id();
+        assertEquals(30, actual);
+    }
 
-	@Test
-	@Tag("integration")
-	public void testGetPaymentIdNotAffectedByOtherFields() {
-		// Test that getPayment_id returns correct value regardless of other fields
-		Payment payment = new Payment();
-		payment.setPayment_id(8888); // TODO: Use required test value
-		payment.setAccount_id(777); // TODO: Set dummy value
-		payment.setAmount(500.25); // TODO: Set dummy value
-		payment.setBeneficiary("Test Beneficiary"); // TODO: Set dummy value
-		payment.setBeneficiary_acc_no("BEN123456"); // TODO: Set dummy value
-		payment.setReference_no("REF987654"); // TODO: Set dummy value
-		payment.setStatus("COMPLETED"); // TODO: Set dummy value
-		payment.setReason_code("RC01"); // TODO: Set dummy value
-		payment.setCreated_at(LocalDateTime.now()); // TODO: Set valid test value
-		int actual = payment.getPayment_id();
-		assertEquals((int) 8888, (int) actual);
-	}
+    @Test
+    @Tag("integration")
+    public void testGetPaymentIdNotAffectedByOtherFields() {
+        Payment payment = new Payment();
+        payment.setPayment_id(8888);
+        payment.setAccount_id(777);
+        payment.setAmount(500.25);
+        payment.setBeneficiary("Test Beneficiary");
+        payment.setBeneficiary_acc_no("BEN123456");
+        payment.setReference_no("REF987654");
+        payment.setStatus("COMPLETED");
+        payment.setReason_code("RC01");
+        payment.setCreated_at(LocalDateTime.now());
+        int actual = payment.getPayment_id();
+        assertEquals(8888, actual);
+    }
 
-	@Test
-	@Tag("integration")
-	public void testGetPaymentIdDefaultsWithJpaNewInstance() {
-		// Test the default payment_id when a new Payment object is created via JPA
-		Payment payment = new Payment();
-		int actual = payment.getPayment_id();
-		assertEquals((int) 0, (int) actual);
-	}
+    @Test
+    @Tag("integration")
+    public void testGetPaymentIdDefaultsWithJpaNewInstance() {
+        Payment payment = new Payment();
+        int actual = payment.getPayment_id();
+        assertEquals(0, actual);
+    }
+
+    //********RoostGPT********
+    // Format the test
+    // Comment or remove this test method
+    //********RoostGPT********
 
 }
