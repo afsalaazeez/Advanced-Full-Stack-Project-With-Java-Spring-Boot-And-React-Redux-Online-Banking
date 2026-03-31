@@ -136,6 +136,8 @@ Execution:
 Validation:
   This validates data isolation within the class, ensuring payment_id is unaffected by side effects or changes in other properties, crucial for predictable state management.
 
+
+roost_feedback [31/03/2026, 5:36:34 AM]:- Add more comments to the test
 */
 
 // ********RoostGPT********
@@ -156,119 +158,145 @@ public class PaymentHistoryGetPaymentIdTest {
 	@Test
 	@Tag("valid")
 	public void testPaymentIdReturnsPositiveIntegerAfterSet() {
+		// Create a new PaymentHistory instance
 		PaymentHistory paymentHistory = new PaymentHistory();
-		paymentHistory.setPayment_id(12345); // TODO: Confirm setter is
-												// available/implemented
+		// Set the payment_id to a positive value
+		paymentHistory.setPayment_id(12345);
+		// Retrieve current payment_id using getter
 		int actual = (int) paymentHistory.getPayment_id();
+		// Assert the payment_id is as set
 		assertEquals(12345, actual);
 	}
 
 	@Test
 	@Tag("boundary")
 	public void testPaymentIdReturnsZeroWhenSetToZero() {
+		// Create a new PaymentHistory instance
 		PaymentHistory paymentHistory = new PaymentHistory();
-		paymentHistory.setPayment_id(0); // TODO: Confirm setter is available/implemented
+		// Set payment_id to zero
+		paymentHistory.setPayment_id(0);
+		// Retrieve payment_id
 		int actual = (int) paymentHistory.getPayment_id();
+		// Assert the payment_id is zero
 		assertEquals(0, actual);
 	}
 
 	@Test
 	@Tag("invalid")
 	public void testPaymentIdReturnsNegativeValueAfterSet() {
+		// Create a new PaymentHistory instance
 		PaymentHistory paymentHistory = new PaymentHistory();
-		paymentHistory.setPayment_id(-99); // TODO: Confirm setter is
-											// available/implemented
+		// Set payment_id to a negative value
+		paymentHistory.setPayment_id(-99);
+		// Retrieve payment_id
 		int actual = (int) paymentHistory.getPayment_id();
+		// Assert the payment_id is as set, even if negative
 		assertEquals(-99, actual);
 	}
 
 	@Test
 	@Tag("boundary")
 	public void testPaymentIdReturnsDefaultValueForNewInstance() {
+		// Create a new PaymentHistory instance without setting payment_id
 		PaymentHistory paymentHistory = new PaymentHistory();
+		// Retrieve default payment_id value
 		int actual = (int) paymentHistory.getPayment_id();
+		// Assert the default value for payment_id is zero
 		assertEquals(0, actual);
 	}
 
 	@Test
 	@Tag("integration")
 	public void testPaymentIdReflectsLatestValueAfterMultipleSets() {
+		// Create a new PaymentHistory instance
 		PaymentHistory paymentHistory = new PaymentHistory();
-		paymentHistory.setPayment_id(10); // TODO: Confirm setter is available/implemented
+		// Set payment_id multiple times to verify the last set value is retained
+		paymentHistory.setPayment_id(10);
 		paymentHistory.setPayment_id(100);
 		paymentHistory.setPayment_id(999);
+		// Retrieve payment_id after multiple sets
 		int actual = (int) paymentHistory.getPayment_id();
+		// Assert the latest set value is reflected
 		assertEquals(999, actual);
 	}
 
 	@Test
 	@Tag("integration")
 	public void testPaymentIdReturnsValueRegardlessOfOtherFields() {
+		// Create a new PaymentHistory instance
 		PaymentHistory paymentHistory = new PaymentHistory();
-		paymentHistory.setAccount_id(555); // TODO: Confirm setter is
-											// available/implemented
-		paymentHistory.setBeneficiary("John Doe"); // TODO: Confirm setter is
-													// available/implemented
-		paymentHistory.setBeneficiary_acc_no("ACC123456"); // TODO: Confirm setter is
-															// available/implemented
-		paymentHistory.setAmount(250.75); // TODO: Confirm setter is available/implemented
-		paymentHistory.setReference_no("REF000001"); // TODO: Confirm setter is
-														// available/implemented
-		paymentHistory.setStatus("SUCCESS"); // TODO: Confirm setter is
-												// available/implemented
-		paymentHistory.setReason_code("RC01"); // TODO: Confirm setter is
-												// available/implemented
-		paymentHistory.setCreated_at(LocalDateTime.now()); // TODO: Confirm setter is
-															// available/implemented
-		paymentHistory.setPayment_id(42); // TODO: Confirm setter is available/implemented
+		// Populate non-payment_id fields with data
+		paymentHistory.setAccount_id(555);
+		paymentHistory.setBeneficiary("John Doe");
+		paymentHistory.setBeneficiary_acc_no("ACC123456");
+		paymentHistory.setAmount(250.75);
+		paymentHistory.setReference_no("REF000001");
+		paymentHistory.setStatus("SUCCESS");
+		paymentHistory.setReason_code("RC01");
+		paymentHistory.setCreated_at(LocalDateTime.now());
+		// Set payment_id
+		paymentHistory.setPayment_id(42);
+		// Retrieve payment_id after other fields are set
 		int actual = (int) paymentHistory.getPayment_id();
+		// Assert payment_id value is as set
 		assertEquals(42, actual);
 	}
 
 	@Test
 	@Tag("boundary")
 	public void testPaymentIdReturnsMaxIntegerValue() {
+		// Create a new PaymentHistory instance
 		PaymentHistory paymentHistory = new PaymentHistory();
-		paymentHistory.setPayment_id(Integer.MAX_VALUE); // TODO: Confirm setter is
-															// available/implemented
+		// Set payment_id to maximum integer value
+		paymentHistory.setPayment_id(Integer.MAX_VALUE);
+		// Retrieve payment_id
 		int actual = (int) paymentHistory.getPayment_id();
+		// Assert payment_id is maximum allowed integer
 		assertEquals(Integer.MAX_VALUE, actual);
 	}
 
 	@Test
 	@Tag("boundary")
 	public void testPaymentIdReturnsMinIntegerValue() {
+		// Create a new PaymentHistory instance
 		PaymentHistory paymentHistory = new PaymentHistory();
-		paymentHistory.setPayment_id(Integer.MIN_VALUE); // TODO: Confirm setter is
-															// available/implemented
+		// Set payment_id to minimum integer value
+		paymentHistory.setPayment_id(Integer.MIN_VALUE);
+		// Retrieve payment_id
 		int actual = (int) paymentHistory.getPayment_id();
+		// Assert payment_id is minimum allowed integer
 		assertEquals(Integer.MIN_VALUE, actual);
 	}
 
 	@Test
 	@Tag("integration")
 	public void testPaymentIdReturnsConsistentValueWithConcurrentAccess() {
+		// Create a new PaymentHistory instance
 		PaymentHistory paymentHistory = new PaymentHistory();
-		paymentHistory.setPayment_id(10); // TODO: Confirm setter is available/implemented
+		// Rapidly set payment_id multiple times, simulating potential concurrent access
+		paymentHistory.setPayment_id(10);
 		paymentHistory.setPayment_id(50);
 		paymentHistory.setPayment_id(500);
 		paymentHistory.setPayment_id(8000);
+		// Retrieve the final value of payment_id after being set repeatedly
 		int actual = (int) paymentHistory.getPayment_id();
+		// Assert the latest value is returned, showing last-write consistency
 		assertEquals(8000, actual);
 	}
 
 	@Test
 	@Tag("integration")
 	public void testPaymentIdNotChangedWhenOtherFieldsUpdated() {
+		// Create a new PaymentHistory instance and set payment_id
 		PaymentHistory paymentHistory = new PaymentHistory();
-		paymentHistory.setPayment_id(123); // TODO: Confirm setter is
-											// available/implemented
-		paymentHistory.setAmount(600.33); // TODO: Confirm setter is available/implemented
-		paymentHistory.setBeneficiary("Jane Smith"); // TODO: Confirm setter is
-														// available/implemented
-		paymentHistory.setAccount_id(2112); // TODO: Confirm setter is
-											// available/implemented
+		paymentHistory.setPayment_id(123);
+		// Update unrelated fields after payment_id is set
+		paymentHistory.setAmount(600.33);
+		paymentHistory.setBeneficiary("Jane Smith");
+		paymentHistory.setAccount_id(2112);
+		// Retrieve payment_id after updating other fields
 		int actual = (int) paymentHistory.getPayment_id();
+		// Assert payment_id value remains unchanged after other field updates
 		assertEquals(123, actual);
 	}
 
